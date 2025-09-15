@@ -1,3 +1,5 @@
+y esto en index.html
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -18,15 +20,31 @@
   <!-- Confeti -->
   <canvas id="confetti" class="confetti-canvas"></canvas>
 
-  <!-- ====== Bienvenida ====== -->
-  <section id="welcome" class="welcome">
-    <div class="banner">
-      <img src="LOGO AGENCIA 1_Mesa de trabajo 1.png" alt="MUCH" class="logo__img">
-      <h1>MUCH</h1>
-      <p>Aprende y gana premios 🎁</p>
-      <a href="#" id="startBtn" class="cta">🚀 Jugar ahora</a>
+<section id="welcome" class="welcome">
+  <div class="hero-card">
+    <div class="hero-logo">
+      <img src="LOGO AGENCIA 1_Mesa de trabajo 1.png" alt="MUCH">
     </div>
-  </section>
+
+    <h1 class="hero-title">MUCH</h1>
+    <p class="hero-sub">Juega y gana premios <span class="emoji">🎁</span></p>
+
+    <a href="#" id="startBtn" class="hero-cta">
+      <span class="hero-cta-emoji">🚀</span>
+      Jugar ahora
+    </a>
+
+   
+
+
+    </div>
+
+    <!-- 👇 ahora va DENTRO de la tarjeta -->
+    <div class="hero-shapes" aria-hidden="true"></div>
+  </div>
+</section>
+
+
 
   <!-- ====== Quiz ====== -->
   <main id="quizShell" class="app-card hidden">
@@ -75,7 +93,7 @@
     <!-- PIE FIJO -->
     <div class="qc-footer">
       <div class="d-flex gap-2 mt-2 flex-wrap">
-        <button id="nextBtn" type="button" class="btn btn-primary">Siguiente ➡️</button>
+        <button id="nextBtn" type="button" class="btn btn-primary">Siguiente ➡</button>
       </div>
     </div>
   </div>
@@ -97,7 +115,7 @@
         <p class="tiny mb-3">Aciertos: <strong id="finalCorrect">0</strong> de <strong id="finalTotal">0</strong></p>
 
         <div id="giftRow" class="d-flex gap-2 flex-wrap d-none">
-          <button id="openTicketBtn" class="btn btn-success">🎟️ Ver mi boleto</button>
+          <button id="openTicketBtn" class="btn btn-success">🎟 Ver mi boleto</button>
           <button id="playAgainBtn1" class="btn btn-outline-secondary">🔁 Jugar otra vez</button>
         </div>
 
@@ -113,7 +131,7 @@
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header border-0">
-          <h5 class="modal-title">🎟️ Boleto Digital</h5>
+          <h5 class="modal-title">🎟 Boleto Digital</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
         </div>
         <div class="modal-body pt-0">
@@ -134,7 +152,7 @@
         <div class="modal-footer border-0">
           <input id="nick" type="text" class="form-control" placeholder="Tu nombre/apodo para el boleto (opcional)" />
           <button id="saveNameBtn" class="btn btn-outline-secondary">Actualizar nombre</button>
-          <button id="printBtn" class="btn btn-success">🖨️ Imprimir</button>
+          <button id="printBtn" class="btn btn-success">🖨 Imprimir</button>
         </div>
       </div>
     </div>

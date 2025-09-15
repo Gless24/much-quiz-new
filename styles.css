@@ -1,10 +1,10 @@
-/* ====== Paleta Agencia: Turquesa + Fucsia ====== */
+/* ==================== Variables de marca ==================== */
 :root{
-  /* Si quieres foto de fondo, descomenta y pon tu ruta:
+  /* Imagen de fondo opcional:
      --bg-image-url: url("fondo-agen.jpg");
      --bg-image-opacity: .35; */
 
-  /* Colores base */
+  /* Paleta */
   --turquesa-50:#ecfeff; --turquesa-100:#cffafe; --turquesa-200:#a5f3fc;
   --turquesa-300:#67e8f9; --turquesa-400:#22d3ee; --turquesa-500:#06b6d4;
   --turquesa-600:#0891b2; --turquesa-700:#0e7490;
@@ -16,136 +16,186 @@
   --gris-100:#f3f4f6; --gris-200:#e5e7eb; --gris-300:#d1d5db;
   --gris-400:#9ca3af; --gris-500:#6b7280; --gris-600:#4b5563; --gris-700:#374151;
 
-  /* Identidad */
   --turquesa: var(--turquesa-500);
   --fucsia: var(--fucsia-500);
 
-  /* Fondo general con marca */
-  --bg-grad:
-    radial-gradient(1200px 800px at 10% 0% , rgba(6,182,212,.25) 0%, transparent 60%),
-    radial-gradient(1000px 800px at 90% 0% , rgba(217,70,239,.22) 0%, transparent 60%),
-    linear-gradient(135deg, #e6fffb 0%, #fff1ff 45%, #fff 100%);
-
-  /* Pills / Badges */
-  --pill-bg: color-mix(in srgb, var(--turquesa) 12%, white);
-  --pill-tx: var(--turquesa-700);
-
-  /* Tarjetas y sombras */
   --card-bg:#fff;
   --card-br:24px;
   --shadow-soft: 0 10px 30px rgba(2,6,23,.12);
   --shadow-hover: 0 16px 36px rgba(2,6,23,.18);
 }
 
-/* ====== Layout global ====== */
-body{
-  margin: 0;
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial;
-  min-height: 100vh;
-  display: flex; align-items: center; justify-content: center;
-  background: linear-gradient(135deg, #0ea5b9, #ec4899, #38bdf8, #f472b6);
-  background-size: 400% 400%;
-  animation: gradientMove 25s ease infinite;
-  position: relative;
-
-  /* ✅ permitir deslizar */
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-}
-
+/* ==================== Layout global ==================== */
 @keyframes gradientMove{
   0%{background-position:0% 50%}
   50%{background-position:100% 50%}
   100%{background-position:0% 50%}
 }
 
+body{
+  margin:0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+  min-height:100vh;
+  display:flex; align-items:center; justify-content:center;
+  /* Fondo exterior (puede quedar oculto si la tarjeta ocupa todo) */
+  background: radial-gradient(80% 100% at 50% 0%, #66d4ff 0%, #46c1ff 35%, #3bb6f2 60%, #2ea0e0 100%);
+  background-attachment: fixed;
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+}
+
 /* Capa de imagen de fondo (opcional) */
-.bg-stack{ position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.bg-stack{ position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
 .bg-stack::before{
   content:""; position:absolute; inset:0;
   background-image: var(--bg-image-url);
-  background-size: cover; background-position: center; background-repeat: no-repeat;
-  mix-blend-mode: soft-light; 
+  background-size:cover; background-position:center; background-repeat:no-repeat;
+  mix-blend-mode:soft-light;
   opacity: var(--bg-image-opacity);
-  filter: saturate(1.05) contrast(1.05) brightness(.95);
-  will-change: opacity, transform;
+  filter:saturate(1.05) contrast(1.05) brightness(.95);
 }
 
-/* Mejor manejo en móviles */
-@media (max-width: 576px){
-  body{
-    min-height: 100svh;
-    align-items: flex-start;
-    padding-block: 16px;
-  }
-  .welcome,
-  .app-card{
-    margin-inline: auto;
-  }
+@media (max-width:576px){
+  body{ min-height:100svh; align-items:flex-start; padding-block:16px; }
 }
 
-/* ====== Componentes ====== */
+/* Utilidades */
 .hidden{ display:none !important; }
-
 .logo__img{ height:56px; border-radius:12px; box-shadow: 0 6px 18px rgba(6,182,212,.2); }
 
-.welcome{ width:min(900px, 100%); }
-.banner{
-  background: linear-gradient(135deg,var(--turquesa),var(--fucsia));
-  color:#fff; border-radius:24px; box-shadow:0 10px 30px rgba(0,0,0,.15);
-  padding:clamp(22px,4vw,40px); text-align:center; margin:16px;
-}
-.banner h1{ font-weight:900; font-size: clamp(28px, 5vw, 40px); margin:0 0 6px 0; }
-.banner p{ margin:0 0 16px 0; font-weight:700; }
-.banner .cta{
-  background:#fff; color:#0b1220; font-weight:900; border-radius:14px; padding:.9rem 1.3rem;
-  text-decoration:none; display:inline-block;
+/* ==================== Portada a pantalla completa ==================== */
+/* El contenedor ocupa TODA la pantalla */
+.welcome{
+  position:relative;
+  width:100vw;
+  height:100vh;             /* pantalla completa */
+  max-width:100%;
+  max-height:100%;
+  margin:0;
+  display:flex; align-items:center; justify-content:center;
+  z-index:1;
 }
 
+/* La tarjeta llena el contenedor (full-bleed) */
+.hero-card{
+  position:absolute; inset:0;        /* ocupa todo el .welcome */
+  padding: clamp(32px, 6vw, 72px);
+  border-radius: 0;                   /* sin esquinas para full-screen */
+  color:#fff; text-align:center; overflow:hidden;
+
+  /* Gradiente base + velo suave como el mock */
+  background:
+    linear-gradient(180deg, rgba(0,0,0,.16), rgba(0,0,0,.16)),
+    linear-gradient(135deg, #0fc2b3 0%, #ef4fa5 45%, #8a59ff 100%);
+  box-shadow: none;                   /* al ocupar todo, no necesitamos sombra exterior */
+}
+
+/* Burbujas/ondas dentro de la tarjeta */
+.hero-shapes{
+  position:absolute; inset:0; border-radius:inherit; pointer-events:none; mix-blend-mode:soft-light;
+  background:
+    radial-gradient(300px 240px at 15% 18%, rgba(255,255,255,.22) 0 55%, transparent 55%),
+    radial-gradient(260px 220px at 87% 20%, rgba(255,255,255,.20) 0 55%, transparent 55%),
+    radial-gradient(420px 260px at 28% 86%, rgba(0,0,0,.18) 0 48%, transparent 48%),
+    radial-gradient(420px 260px at 100% 100%, rgba(255,255,255,.08) 0 45%, transparent 45%);
+}
+
+/* Logo más grande */
+.hero-logo img{
+  height: clamp(110px, 14vw, 160px);  /* ↑ tamaño del logo */
+  filter: drop-shadow(0 8px 22px rgba(2,6,23,.25));
+  margin-bottom: 12px;
+}
+
+/* Tipografías portada */
+.hero-title{
+  font-size: clamp(60px, 10vw, 112px);
+  line-height:1; font-weight:900; letter-spacing:.3px;
+  margin: 12px 0 14px;
+}
+.hero-sub{
+  font-size: clamp(22px, 3.2vw, 40px);
+  font-weight:900; margin:0 0 28px;
+}
+
+/* Botón grande */
+.hero-cta{
+  display:inline-flex; align-items:center; gap:12px;
+  padding: 18px 26px;
+  border-radius:16px;
+  background:#fff; color:#111827; text-decoration:none; font-weight:900;
+  box-shadow: 0 14px 32px rgba(0,0,0,.28), 0 0 0 1px rgba(0,0,0,.04) inset;
+  transform: translateZ(0); transition: transform .08s ease, box-shadow .15s ease;
+}
+.hero-cta:hover{ transform: translateY(-1px); box-shadow: 0 20px 40px rgba(0,0,0,.32); }
+.hero-cta-emoji{ font-size:22px; }
+
+/* Acciones inferiores (si las usas) */
+.hero-actions{
+  position:absolute; left:24px; right:24px; bottom:22px;
+  display:flex; align-items:center; justify-content:space-between;
+  color:rgba(255,255,255,.92); font-weight:700;
+}
+.hero-actions-left{ display:flex; gap:12px; }
+.hero-icon{
+  background:rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.25);
+  border-radius:12px; color:#fff;
+  padding:8px 10px; line-height:1; cursor:pointer;
+  box-shadow:0 6px 16px rgba(0,0,0,.25);
+}
+.hero-icon:hover{ background:rgba(255,255,255,.20); }
+.hero-share{
+  background:rgba(255,255,255,.16);
+  border:1px solid rgba(255,255,255,.25);
+  color:#fff; text-decoration:none; font-weight:800;
+  border-radius:12px; padding:8px 12px;
+  box-shadow:0 6px 16px rgba(0,0,0,.25);
+}
+.hero-share:hover{ background:rgba(255,255,255,.22); }
+
+@media (max-width:640px){
+  .hero-actions{ left:16px; right:16px; }
+}
+
+/* ==================== App/Quiz ==================== */
 .app-card{
-  position: relative; z-index: 1;
+  position:relative; z-index:1;
   background: var(--card-bg, rgba(255,255,255,0.10));
   border-radius: var(--card-br, 16px);
   box-shadow: var(--shadow-soft);
   width: min(860px, 100%);
   padding: clamp(18px, 3.2vw, 32px);
   border: 1px solid color-mix(in srgb, var(--turquesa) 8%, #fff);
-  margin: 16px; /* espacio de scroll */
+  margin:16px;
+  max-height:86vh; display:flex; flex-direction:column;
 }
-.app-card::before{
-  content:""; position:absolute; inset:auto 0 0 0; height:6px;
-  background: linear-gradient(90deg, var(--turquesa), var(--fucsia));
-}
+.app-card::before{ content:""; position:absolute; inset:auto 0 0 0; height:6px;
+  background: linear-gradient(90deg, var(--turquesa), var(--fucsia)); }
 
-.pill{
-  background:var(--pill-bg); color:var(--pill-tx); font-weight:800; border-radius:999px; padding:.45rem .9rem;
-  border:1px solid color-mix(in srgb, var(--turquesa) 18%, white);
-}
+.pill{ background:var(--pill-bg); color:var(--pill-tx); font-weight:800; border-radius:999px; padding:.45rem .9rem;
+  border:1px solid color-mix(in srgb, var(--turquesa) 18%, white); }
 .tiny{ font-size:.92rem; color:var(--gris-600) }
 
-.progress{ height:10px; background: #eef2ff; border-radius:999px; }
-.progress__bar{ background: linear-gradient(90deg, var(--turquesa) 0%, var(--fucsia) 100%); box-shadow: 0 0 0 2px #fff inset; }
+.progress{ height:10px; background:#eef2ff; border-radius:999px; }
+.progress__bar{ background:linear-gradient(90deg, var(--turquesa) 0%, var(--fucsia) 100%); box-shadow:0 0 0 2px #fff inset; }
 
-.question-card{
-  background:#ffffff; border:1px solid var(--gris-200); border-radius:18px; padding:16px;
-  box-shadow: 0 8px 24px rgba(6,182,212,.08);
-}
+.question-card{ background:#fff; border:1px solid var(--gris-200); border-radius:18px; padding:16px;
+  box-shadow:0 8px 24px rgba(6,182,212,.08); }
 
 .option-btn{
   border:2px solid transparent; text-align:left; padding:16px; border-radius:16px; background:#fff;
   transition: transform .08s ease, box-shadow .15s ease, border-color .15s ease, background .15s ease;
-  box-shadow: 0 4px 12px rgba(2,6,23,.05); width:100%;
+  box-shadow:0 4px 12px rgba(2,6,23,.05); width:100%;
 }
 .option-btn:hover{
-  transform: translateY(-1px); box-shadow: var(--shadow-hover);
+  transform:translateY(-1px); box-shadow: var(--shadow-hover);
   border-color: color-mix(in srgb, var(--fucsia) 55%, var(--turquesa) 45%);
   background: linear-gradient(0deg, rgba(6,182,212,.05), rgba(217,70,239,.05));
 }
-.option-btn:focus-visible{
-  outline: none; box-shadow: 0 0 0 4px color-mix(in srgb, var(--turquesa) 25%, white); border-color: var(--turquesa);
-}
-.option-btn--correct{ border-color: var(--turquesa) !important; background: color-mix(in srgb, var(--turquesa) 12%, white) !important; }
-.option-btn--incorrect{ border-color: var(--fucsia) !important; background: color-mix(in srgb, var(--fucsia) 10%, white) !important; }
+.option-btn:focus-visible{ outline:none; box-shadow:0 0 0 4px color-mix(in srgb, var(--turquesa) 25%, white); border-color:var(--turquesa); }
+.option-btn--correct{ border-color:var(--turquesa)!important; background:color-mix(in srgb, var(--turquesa) 12%, white)!important; }
+.option-btn--incorrect{ border-color:var(--fucsia)!important; background:color-mix(in srgb, var(--fucsia) 10%, white)!important; }
 .option-btn:disabled{ opacity:.95; cursor:not-allowed; }
 .emoji{ font-size:22px; width:32px; display:inline-flex; justify-content:center; align-items:center; margin-right:8px; }
 
@@ -162,43 +212,78 @@ body{
     radial-gradient(12px 12px at 0 50%, transparent 12px, #fff 13px) left center / 24px 24px repeat-y,
     radial-gradient(12px 12px at 100% 50%, transparent 12px, #fff 13px) right center / 24px 24px repeat-y,
     linear-gradient(#fff,#fff);
-  box-shadow: 0 12px 28px rgba(31,165,166,.12);
+  box-shadow:0 12px 28px rgba(31,165,166,.12);
 }
-.ticket__title{ font-weight:900; letter-spacing:.3px; color: var(--fucsia); }
+.ticket__title{ font-weight:900; letter-spacing:.3px; color:var(--fucsia); }
 .ticket__row{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
 .ticket__badge{ background:var(--turquesa-100); color:var(--turquesa-700); border-radius:10px; padding:6px 10px; font-weight:800 }
 .print-note{ font-size:.85rem; color:var(--gris-500) }
 
-.modal-content{ border:1px solid color-mix(in srgb, var(--fucsia) 10%, white); box-shadow: 0 16px 40px rgba(162,28,175,.15); }
+.modal-content{ border:1px solid color-mix(in srgb, var(--fucsia) 10%, white); box-shadow:0 16px 40px rgba(162,28,175,.15); }
 
-/* === Scroll interno en la pregunta === */
-.app-card{
-  max-height: 86vh;           /* altura visible de la tarjeta */
-  display: flex;
-  flex-direction: column;
-}
-
-.question-card{
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  flex: 1 1 auto;             /* ocupa el alto disponible */
-  overflow: hidden;           /* el scroll se queda en qc-body */
-}
-
-.qc-body{
-  overflow-y: auto;           /* <- aquí se desliza */
-  -webkit-overflow-scrolling: touch;
-  padding-right: 2px;
-}
-
-.qc-footer{
-  position: sticky;
-  bottom: 0;
-  background: linear-gradient(to top, #ffffff, rgba(255,255,255,0.96) 60%, rgba(255,255,255,0));
-  padding-top: 8px;
-}
-
+/* ==================== Mobile full-screen & auto-fit ==================== */
+/* Usa unidades dinámicas (svh/dvh) para cubrir pantalla real en móviles */
 @media (max-width: 576px){
-  .app-card{ max-height: 90vh; }
+  /* Contenedor de portada a pantalla completa real */
+  .welcome{
+    width: 100vw;
+    height: 100svh;                 /* evita “salto” por barra del navegador */
+    margin: 0;
+    padding: 0;
+    align-items: stretch;
+    justify-content: stretch;
+  }
+
+  /* Tarjeta a pantalla completa sin bordes ni sombra pesada */
+  .hero-card{
+    position: absolute;
+    inset: 0;                       /* ocupa todo el .welcome */
+    border-radius: 0;
+    padding: 32px 16px calc(24px + env(safe-area-inset-bottom));
+    box-shadow: none;
+  }
+
+  /* Ajustes de tipografía e imagen para que quepa sin cortar */
+  .hero-logo img{
+    height: clamp(88px, 18dvh, 140px);
+    margin-bottom: 8px;
+  }
+  .hero-title{
+    font-size: clamp(36px, 10vw, 56px);
+    margin: 8px 0 10px;
+  }
+  .hero-sub{
+    font-size: clamp(16px, 4.5vw, 22px);
+    margin-bottom: 18px;
+  }
+
+  /* Botón cómodo en móvil */
+  .hero-cta{
+    font-size: clamp(14px, 4vw, 16px);
+    padding: 14px 18px;
+    border-radius: 14px;
+  }
+
+  /* Acciones pegadas al borde inferior con safe-area */
+  .hero-actions{
+    position: fixed;
+    left: 12px;
+    right: 12px;
+    bottom: calc(10px + env(safe-area-inset-bottom));
+  }
+
+  /* El contenedor del quiz también puede ocupar toda la pantalla si lo usas */
+  .app-card{
+    width: 100vw;
+    min-height: 100svh;
+    margin: 0;
+    border-radius: 0;
+    box-shadow: none;
+    border: 0;
+    padding: 16px;
+  }
+
+  /* Si tu vista de pregunta tiene cuerpo con scroll, habilítalo */
+  .question-card{ padding: 14px; }
+  .qc-body{ max-height: 60svh; overflow: auto; }  /* ajusta si lo usas */
 }
